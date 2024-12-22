@@ -1,0 +1,177 @@
+package com.example;
+
+
+import org.apache.spark.SparkConf;
+import org.apache.spark.api.java.JavaPairRDD;
+import org.apache.spark.api.java.JavaRDD;
+import org.apache.spark.api.java.JavaSparkContext;
+
+import scala.Tuple2;
+
+public class Main {
+    public static void main(String[] args) {
+
+        SparkConf conf = new SparkConf().setAppName("TransazioniApp").setMaster("local");
+        JavaSparkContext sc = new JavaSparkContext(conf);
+        sc.setLogLevel("ERROR");
+
+        // 1.Carica il file di testo in un RDD
+        JavaRDD<String> transazioniRDD = sc.textFile("C:/Users/Domenico/Desktop/listaTransazioni.txt");
+
+
+        // 2.Calcola il saldo totale per ogni cliente 
+        JavaPairRDD<String, Double> saldoClienteRDD = transazioniRDD.mapToPair(transazione -> {
+            String[] campi = transazione.split(",");
+            String IDCliente = campi[1];
+            double importoTransazione = Double.parseDouble(campi[2]);
+            String tipoTransazione = campi[3];
+
+            if (tipoTransazione.equals("PRELIEVO")) {
+                importoTransazione = -importoTransazione;
+            }
+
+            return new Tuple2<>(IDCliente, importoTransazione);
+        }).reduceByKey((a, b) -> a + b);
+
+        saldoClienteRDD.foreach(tupla -> {
+            String IDCliente = tupla._1();
+            double saldo = tupla._2();
+            System.out.println("-----------------------------------------------");
+            System.out.println("IDCliente: " + IDCliente + ", Saldo: " + saldo);
+            System.out.println("-----------------------------------------------");
+        });
+
+
+	-----------------------------------------------
+	IDCliente: 1005, Saldo: 60.0
+	-----------------------------------------------
+	-----------------------------------------------
+	IDCliente: 1001, Saldo: 275.0
+	-----------------------------------------------
+	-----------------------------------------------
+	IDCliente: 1002, Saldo: 190.0
+	-----------------------------------------------
+	-----------------------------------------------
+	IDCliente: 1004, Saldo: -130.0
+	-----------------------------------------------
+	-----------------------------------------------
+	IDCliente: 1006, Saldo: 30.0
+	-----------------------------------------------
+	-----------------------------------------------
+	IDCliente: 1003, Saldo: 525.0
+	-----------------------------------------------
+	-----------------------------------------------
+	IDCliente: 1007, Saldo: 525.0
+	-----------------------------------------------
+
+
+
+        //3.Trova il cliente con il saldo più alto
+        double saldoMassimo = saldoClienteRDD.map(tupla -> tupla._2()).reduce((a, b) -> Math.max(a, b));
+
+        JavaPairRDD<String, Double> clientiConSaldoMassimoRDD = saldoClienteRDD.filter(tupla -> tupla._2() == saldoMassimo);
+        
+        clientiConSaldoMassimoRDD.foreach(tupla -> {
+            String IDCliente = tupla._1();
+            double saldo = tupla._2();
+            System.out.println("-----------------------------------------------");
+            System.out.println("Cliente con saldo più alto: " + IDCliente + ", Saldo: " + saldo);
+            System.out.println("-----------------------------------------------");
+        });
+
+	
+	-----------------------------------------------
+	Cliente con saldo più alto: 1003, Saldo: 525.0
+	-----------------------------------------------
+	-----------------------------------------------
+	Cliente con saldo più alto: 1007, Saldo: 525.0
+	-----------------------------------------------
+	
+
+
+        //4.Conta quante transazioni di tipo "DEPOSITO" e "PRELIEVO" sono state effettuate
+        JavaPairRDD<String, Integer> tipoTransazioneRDD = transazioniRDD.mapToPair(transazione -> {
+            String[] campi = transazione.split(",");
+            String tipoTransazione = campi[3];
+            return new Tuple2<>(tipoTransazione, 1);
+        }).reduceByKey((a, b) -> a + b);
+
+        
+        tipoTransazioneRDD.foreach(tupla -> {
+            String tipoTransazione = tupla._1();
+            int count = tupla._2();
+            System.out.println("-----------------------------------------------");
+            System.out.println("Tipo di transazione: " + tipoTransazione + ", Conteggio: " + count);
+            System.out.println("-----------------------------------------------");
+        });
+
+
+	-----------------------------------------------
+	Tipo di transazione: PRELIEVO, Conteggio: 3
+	-----------------------------------------------
+	-----------------------------------------------
+	Tipo di transazione: DEPOSITO, Conteggio: 13
+	-----------------------------------------------
+
+
+        
+        //5.Calcola l'importo medio prelevato
+        JavaRDD<Double> importiPrelevatiRDD = transazioniRDD.filter(transazione -> {
+            String[] campi = transazione.split(",");
+            String tipoTransazione = campi[3];
+            return tipoTransazione.equals("PRELIEVO");
+        }).map(transazione -> {
+            String[] campi = transazione.split(",");
+            return Double.parseDouble(campi[2]);
+        });
+
+        double sommaPrelievi = importiPrelevatiRDD.reduce((a, b) -> a + b);
+
+        long numeroPrelievi = importiPrelevatiRDD.count();
+
+        double importoMedioPrelevato = sommaPrelievi / numeroPrelievi;
+
+        System.out.println("-----------------------------------------------");
+        System.out.println("Importo medio prelevato: " + importoMedioPrelevato);
+        System.out.println("-----------------------------------------------");
+
+
+	-----------------------------------------------
+	Importo medio prelevato: 93.33333333333333
+	-----------------------------------------------
+
+
+        //6.Identifica il cliente che ha effettuato più transazioni
+        JavaPairRDD<String, Integer> transazioniClienteRDD = transazioniRDD.mapToPair(transazione -> {
+            String[] campi = transazione.split(",");
+            String IDCliente = campi[1];
+            return new Tuple2<>(IDCliente, 1);
+        }).reduceByKey((a, b) -> a + b);
+
+        int maxTransazioni = transazioniClienteRDD.map(tupla -> tupla._2()).reduce((a, b) -> Math.max(a, b));
+
+        JavaPairRDD<String, Integer> clientiConPiùTransazioniRDD = transazioniClienteRDD.filter(tupla -> tupla._2() == maxTransazioni);
+
+        clientiConPiùTransazioniRDD.foreach(tupla -> {
+            String IDCliente = tupla._1();
+            int numeroTransazioni = tupla._2();
+            System.out.println("------------------------------------------------------------");
+            System.out.println("Cliente con più transazioni: " + IDCliente + ", Numero di transazioni: " + numeroTransazioni);
+            System.out.println("------------------------------------------------------------");
+        });
+
+
+	------------------------------------------------------------
+	Cliente con più transazioni: 1001, Numero di transazioni: 3
+	------------------------------------------------------------
+	------------------------------------------------------------
+	Cliente con più transazioni: 1006, Numero di transazioni: 3
+	------------------------------------------------------------
+	------------------------------------------------------------
+	Cliente con più transazioni: 1007, Numero di transazioni: 3
+	------------------------------------------------------------
+
+
+        sc.close();
+    }
+}
