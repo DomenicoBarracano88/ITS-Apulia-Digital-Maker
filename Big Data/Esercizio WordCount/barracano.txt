@@ -1,0 +1,17 @@
+1) Rilasciare sull'HDFS singlenode configurato sulla tua macchina un file di testo a tua scelta;
+-Ho cretao un file .txt con all'interno una frase "Antonio ha sviluppato un ottimo software, ma Saverio è più bravo a sviluppare software rispetto ad Antonio";
+-Ho eseguito dal terminale il comando: "hdfs dfs -put C:/Users/Domenico/Desktop/file_input.txt /input" per dare in input il file file_input.txt;
+
+2)Crea un maven project su una IDE in grado di eseguire il mapreduce del file testuale estratto al percorso dell'hdfs in locale;
+-Ho creato con VSC il progetto maven con all'interno le seguenti classi:
+	WordCount.java  -----> main del programma
+	WordMapper.java -----> classe che si occupa di mappare in questo caso le parole all'interno del file
+	WordReducer.java -----> classe che conta le parole e inserisce quelle uniche nella collection su MongoDB
+	MongoDBConnection.java -----> classe per gestire la connessione a MongoDB
+
+
+3)Eseguo il comando "hadoop jar pathdeljar /input /output" per eseguire il job
+
+
+Spiega, in due righe, perchè riscontri affidabilità e sicurezza nel salvataggio di dati sul tuo HDFS in locale.
+Secondo me non è affidabile perchè è "single-node", quindi c'è mancanza di ridondanza. se il nodo principale fallisce, l'intero sistema si blocca.

@@ -1,0 +1,46 @@
+package com.example;
+
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import org.bson.Document;
+
+import java.util.List;
+
+public class MongoDBConnection {
+    private MongoCollection<Document> collection;
+
+    public MongoDBConnection() {
+        try {
+            // Collegamento all'istanza MongoDB locale
+            MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017");
+
+            // Recupero il database "local"
+            MongoDatabase database = mongoClient.getDatabase("local");
+
+            // Recupero la collezione "ParoleUniche"
+            collection = database.getCollection("ParoleUniche");
+
+        } catch (Exception e) {
+            System.err.println("Errore di connessione a MongoDB: " + e.getMessage());
+        }
+    }
+
+    // Metodo per inserire una lista di parole nella collection
+    public void insertUniqueWords(List<String> words) {
+        if (collection == null) {
+            System.err.println("La collezione MongoDB non è stata inizializzata correttamente.");
+            return;
+        }
+        
+        try {
+            for (String word : words) {
+                Document doc = new Document("word", word);
+                collection.insertOne(doc);
+            }
+        } catch (Exception e) {
+            System.err.println("Errore durante l'inserimento di parole uniche: " + e.getMessage());
+        }
+    }
+}

@@ -1,0 +1,45 @@
+package com.example;
+
+import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Reducer;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+
+public class WordReducer extends Reducer<Text, LongWritable, Text, LongWritable> {
+    private final LongWritable result = new LongWritable();
+    private final HashSet<String> uniqueWords = new HashSet<>();
+
+    @Override
+    protected void reduce(Text key, Iterable<LongWritable> values, Context context) throws IOException, InterruptedException {
+        long sum = 0;
+        for (LongWritable val : values) {
+            sum += val.get();
+        }
+
+        result.set(sum);
+        context.write(key, result);
+
+        // Aggiungo le parole uniche al set
+        if (sum == 1) {
+            uniqueWords.add(key.toString());
+        }
+    }
+
+    @Override
+    protected void cleanup(Context context) throws IOException, InterruptedException {
+        
+        // Connetto a MongoDB tramite la classe MongoDBConnection
+        MongoDBConnection mongoDBConnection = new MongoDBConnection();
+
+        // Converto il set di parole uniche in una lista
+        List<String> uniqueWordList = new ArrayList<>(uniqueWords);
+
+        // Inserisco le parole uniche nella collection MongoDB
+        mongoDBConnection.insertUniqueWords(uniqueWordList);
+
+    }
+}
