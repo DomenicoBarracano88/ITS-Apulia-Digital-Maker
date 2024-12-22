@@ -1,0 +1,174 @@
+/* Imposta un tema scuro con accenti di colore rosso, che richiama il look aggressivo e dinamico della F1 */
+ion-header {
+    --background: linear-gradient(90deg, #111, #222); /* Effetto metallizzato per l'intestazione */
+    ion-toolbar {
+      --background: transparent;
+    }
+  }
+  
+  ion-title {
+    text-align: center;
+    font-size: 1.5rem;
+    color: #ffffff; /* Testo bianco per contrastare lo sfondo scuro */
+  }
+  
+  /* Stile per il contenuto */
+  ion-content {
+    --background: #121212; /* Sfondo scuro per l'app */
+  }
+  
+  /* Stile per gli item della lista */
+  ion-item {
+    --background: #222; /* Sfondo grigio scuro per gli item */
+    --border-color: #333; /* Bordo leggero per dare risalto agli item */
+    border-radius: 10px; /* Angoli arrotondati per gli item */
+    margin: 10px 0;
+    padding: 10px;
+    color: #ffffff; /* Testo bianco */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  /* Stile per le card */
+  ion-card {
+    --background: #222; /* Sfondo grigio scuro per la card */
+    --border-radius: 15px; /* Angoli arrotondati per la card */
+    --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Leggera ombra per effetto di sollevamento */
+    margin: 10px 0;
+    padding: 10px;
+  }
+  
+  ion-card-header {
+    ion-card-title {
+      font-size: 1.2rem;
+      color: #ff0000; /* Rosso acceso per il titolo della card */
+    }
+  
+    ion-card-subtitle {
+      font-size: 1rem;
+      color: #bbbbbb; /* Colore grigio chiaro per il sottotitolo */
+    }
+  }
+  
+  ion-card-content {
+    p {
+      color: #ffffff; /* Testo bianco per i paragrafi all'interno della card */
+    }
+  }
+  
+  /* Stile per il selettore di piloti */
+  ion-select {
+    --background: #333; /* Sfondo grigio scuro per il select */
+    --color: #ffffff; /* Testo bianco per il select */
+    --placeholder-color: #bbbbbb; /* Colore del placeholder */
+    border-radius: 10px;
+    margin: 10px 0;
+  }
+  
+  /* Stile per le opzioni del selettore */
+  ion-select-option {
+    --color: #ffffff; /* Testo bianco per le opzioni del select */
+    --background: #222; /* Sfondo grigio scuro per le opzioni */
+  }
+  
+  /* Stile per i label */
+  ion-label {
+    font-size: 1rem; /* Dimensione testo dei label */
+    color: #ffffff; /* Colore bianco per il testo del label */
+    margin-bottom: 5px; /* Margine inferiore per separare dal contenuto */
+    display: block; /* Assicura che i label occupino un'intera riga */
+  
+    strong {
+      color: #ff0000; /* Accento rosso per testi in grassetto all'interno del label */
+    }
+  }
+  
+  /* Stile per i label all'interno delle ion-item */
+  ion-item ion-label {
+    font-size: 1.1rem; /* Testo leggermente più grande all'interno degli ion-item */
+    color: #ff0000; /* Colore rosso per richiamare l'accento F1 */
+  }
+
+  /* Stile per il grafico */
+  .card {
+    margin: 20px 0;
+    padding: 10px;
+    border-radius: 15px;
+    background: #222; /* Sfondo grigio scuro per il contenitore del grafico */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Leggera ombra per effetto di sollevamento */
+  }
+  
+
+
+
+
+.cards-container {
+  display: flex;
+  justify-content: center; /* Centra orizzontalmente */
+  align-items: center; /* Centra verticalmente */
+  flex-wrap: wrap; /* Permette alle card di andare a capo su più righe */
+  min-height: 100vh; /* Fa in modo che il contenitore occupi tutta l'altezza della pagina */
+  padding: 20px;
+}
+
+.driver-card {
+  --background: #222; /* Sfondo scuro per la card */
+  border-radius: 15px; /* Angoli arrotondati per la card */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Leggera ombra */
+  margin: 15px; /* Spazio tra una card e l'altra */
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centra il contenuto orizzontalmente */
+  justify-content: center; /* Centra il contenuto verticalmente */
+  text-align: center; /* Centra i testi */
+  
+  width: 200px;  /* Imposta la larghezza fissa */
+  height: 300px; /* Imposta l'altezza fissa */
+
+  img {
+    width: 100px; /* Larghezza dell'immagine */
+    height: 100px; /* Altezza dell'immagine */
+    object-fit: cover; /* Assicura che l'immagine mantenga le proporzioni */
+    border-radius: 50%; /* Rende l'immagine circolare */
+    margin-bottom: 10px; /* Spazio tra l'immagine e il titolo */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Ombra sull'immagine */
+  }
+
+  ion-card-header {
+    margin-top: 10px;
+
+    ion-card-title {
+      font-size: 1.2rem;
+      color: #ff0000; /* Rosso acceso per il nome del pilota */
+    }
+
+    ion-card-subtitle {
+      font-size: 1rem;
+      color: #bbbbbb; /* Colore grigio chiaro per il sottotitolo */
+    }
+  }
+}
+
+
+
+
+
+  /* Aggiungi uno sfondo dinamico per la pagina */
+  :host {
+    background: linear-gradient(135deg, #000000, #1c1c1c); /* Grigio scuro con sfumature nere */
+  }
+  
+  /* Stile per dispositivi con schermo grande */
+  @media (min-width: 768px) {
+    ion-card {
+      max-width: 600px; /* Larghezza massima per le card su schermi più grandi */
+      margin: 0 auto;
+    }
+
+    ion-label {
+      font-size: 1.2rem; /* Aumenta la dimensione del testo per schermi più grandi */
+    }
+  }
+  

@@ -1,0 +1,52 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Calendario
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Tab 2</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+
+  <ion-item style="text-align: center;">
+    <ion-label>Seleziona Anno</ion-label>
+    <ion-select [(ngModel)]="selectedYear" (ionChange)="getFilteredGrandPrix()" placeholder="Scegli un anno">
+      <ion-select-option *ngFor="let year of years" [value]="year">{{ year }}</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-list *ngIf="!isLoading">
+    <ng-container *ngIf="getFilteredGrandPrix().length; else noGrandPrix">
+      <ion-item *ngFor="let gp of getFilteredGrandPrix()">
+        <ion-label style="text-align: center;">
+          <h3>{{ gp.meeting_official_name }}</h3>
+          <p>{{ gp.country_name }}</p>
+        </ion-label>
+        <ion-button [routerLink]="['/tabs/tab2', gp.meeting_key]">
+          Dettagli
+        </ion-button>
+      </ion-item>
+    </ng-container>
+    <ng-template #noGrandPrix>
+      <ion-label>
+        <h3>Nessun Gran Premio trovato per l'anno selezionato.</h3>
+      </ion-label>
+    </ng-template>
+  </ion-list>
+
+  <ion-label *ngIf="isError">
+    <h3>Errore!</h3>
+    <ion-button (click)="OnRefreshPage()">
+      Clicca qui per riaggiornare.
+    </ion-button>
+  </ion-label>
+
+  
+     
+</ion-content>

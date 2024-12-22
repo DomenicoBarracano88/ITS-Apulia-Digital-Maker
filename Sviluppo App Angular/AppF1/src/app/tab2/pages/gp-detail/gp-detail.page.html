@@ -1,0 +1,30 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons  slot="start">
+      <ion-back-button defaultHref="tab/tab2"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Deattagli GP</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">gp-detail</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  
+    @for (session of sessions; track $index){
+      <ion-item>
+        <ion-label>
+          <h3>{{session.session_name}}</h3>
+          <p>{{session.country_name}}</p>
+        </ion-label>
+        <ion-button [routerLink]="['/tabs/tab2/', meetingKey, session.session_key]">
+          Dettagli
+        </ion-button>
+      </ion-item>  
+    }
+  
+</ion-content>

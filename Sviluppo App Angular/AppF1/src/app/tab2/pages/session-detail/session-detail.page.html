@@ -1,0 +1,98 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons  slot="start">
+      <ion-back-button defaultHref="tab/tab2/gp-detail"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Dettagli Sessione</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">session-detail</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-segment [value]="segmentValue" (ionChange)="onSegmentChange($event)">
+    <ion-segment-button value="session">
+      <ion-label>Sessione</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="weather">
+      <ion-label>Meteo</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="drivers">
+      <ion-label>Piloti</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  @if (segmentValue === 'session') {
+  @for (session of sessions; track $index){
+    <ion-item >
+    <ion-card >
+      <ion-card-header>
+        <ion-card-title>{{ session.session_name }}</ion-card-title>
+        <ion-card-subtitle>{{ session.location}}</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <p>Inizio: {{ session.date_start | date:'dd MM yyyy'}}</p>
+        <p>Fine: {{ session.date_end }}</p>
+        <p>Categoria: {{ session.session_type }}</p>
+
+      </ion-card-content>
+    </ion-card>
+  </ion-item>
+  }
+  
+  <ion-item>
+    <ion-label>Seleziona Piloti</ion-label>
+    <ion-select (ionChange)="onDriversChange($event)" multiple>
+      <ion-select-option *ngFor="let driver of drivers" [value]="driver.driver_number">
+        {{driver.full_name}}
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
+
+
+  <div class="card">
+    <p-chart type="line" [data]="data" [options]="options"></p-chart>
+  </div>
+}
+@else if (segmentValue === 'weather') {
+  <ion-item>
+    @for (session of sessions; track $index){
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>{{ session.session_name }}</ion-card-title>
+          <ion-card-subtitle>{{ session.location}}</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>
+          <p>Inizio: {{ session.date_start | date:'dd MM yyyy'}}</p>
+          <p>Fine: {{ session.date_end }}</p>
+          <p>Categoria: {{ session.session_type }}</p>
+        </ion-card-content>
+      </ion-card>
+    }
+    <ion-label>
+      <strong>Media Temperatura Aria:</strong> {{ getAverageAirTemperature() | number: '1.1-1' }} °C
+    </ion-label>
+    <ion-label>
+      <strong>Media Temperatura Tracciato:</strong> {{ getAverageTrackTemperature() | number: '1.1-1' }} °C
+    </ion-label>
+  </ion-item>
+}
+@else if (segmentValue === 'drivers') {
+  <div class="cards-container">
+  @for (driver of drivers; track $index) {
+    <ion-card class="driver-card">
+      <img alt="img driver" [src]="driver.headshot_url" />
+      <ion-card-header>
+        <ion-card-title>{{driver.full_name}}</ion-card-title>
+        <ion-card-subtitle>{{driver.team_name}}</ion-card-subtitle>
+        <ion-card-content>{{driver.country_code}}</ion-card-content>
+      </ion-card-header>
+    </ion-card>
+  }
+  </div>
+}
+</ion-content>

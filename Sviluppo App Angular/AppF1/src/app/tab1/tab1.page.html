@@ -1,0 +1,59 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      <div style="display: flex; justify-content: center; align-items: center; height: 100px;">
+        <img src="assets/FWONK_BIG.svg" alt="Logo" style="height: 100px; margin: 0 auto; " />
+      </div>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Tab 1</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+
+
+  @if (!isLoading){
+    <ion-list>
+      @for (driver of [1,2,3,4,5,6,7,8,9]; track $index) {
+        <h3>
+          <ion-skeleton-text [animated]="true" style="width: 100%;"></ion-skeleton-text>
+        </h3>
+        <p>
+          <ion-skeleton-text [animated]="true" style="width: 80%;"></ion-skeleton-text>
+        </p>
+        <p>
+          <ion-skeleton-text [animated]="true" style="width: 50%;"></ion-skeleton-text>
+        </p>
+      }
+    </ion-list>
+  } @else {
+    <div class="cards-container">
+      @for (driver of drivers; track $index) {
+        <ion-card class="driver-card">
+          <img alt="img driver" [src]="driver.headshot_url" />
+          <ion-card-header>
+            <ion-card-title>{{driver.full_name}}</ion-card-title>
+            <ion-card-subtitle>{{driver.team_name}}</ion-card-subtitle>
+            <ion-card-content>{{driver.country_code}}</ion-card-content>
+            <ion-card-content>{{driver.driver_number}}</ion-card-content>
+          </ion-card-header>
+        </ion-card>
+      }
+      </div>
+  }
+  @if (isError) {
+    <ion-label>
+    <h3>
+      Errore!
+    </h3>
+    <ion-button (click) = "OnRefreshPage()">
+      Clicca qui per riaggiornare.
+    </ion-button>
+  </ion-label>
+  }
+</ion-content>

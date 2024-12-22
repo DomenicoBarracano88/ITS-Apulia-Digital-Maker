@@ -1,0 +1,96 @@
+/* Imposta un tema scuro con accenti di colore rosso, che richiama il look aggressivo e dinamico della F1 */
+ion-header {
+    --background: linear-gradient(90deg, #111, #222); /* Effetto metallizzato per l'intestazione */
+    ion-toolbar {
+      --background: transparent;
+    }
+  }
+  
+  ion-title {
+    text-align: center;
+    font-size: 1.5rem;
+    color: #ffffff; /* Testo bianco per contrastare lo sfondo scuro */
+  }
+  
+  /* Stile per il contenuto */
+  ion-content {
+    --background: #121212; /* Sfondo scuro per l'app */
+  }
+  
+  ion-item {
+    --background: #222; /* Sfondo grigio scuro per gli item */
+    --border-color: #333; /* Bordo leggero per dare risalto agli item */
+    border-radius: 10px; /* Angoli arrotondati per gli item */
+    margin: 10px 0;
+    padding: 10px;
+    color: #ffffff; /* Testo bianco */
+  }
+  
+  ion-label {
+    text-align: center;
+    color: #ffffff; /* Testo bianco per i label */
+  }
+  
+  ion-select {
+    --background: #333; /* Sfondo grigio scuro per il select */
+    --color: #ffffff; /* Testo bianco per il select */
+    --placeholder-color: #bbbbbb; /* Colore del placeholder */
+    border-radius: 10px;
+    margin: 10px 0;
+  }
+  
+  ion-select-option {
+    --color: #ffffff; /* Testo bianco per le opzioni del select */
+    --background: #222; /* Sfondo grigio scuro per le opzioni */
+  }
+  
+  /* Stile per le liste */
+  ion-list {
+    padding: 10px;
+  }
+  
+  ion-button {
+    --background: #ff0000; /* Rosso acceso per il pulsante */
+    --border-radius: 20px;
+    color: #ffffff;
+    margin-top: 10px;
+  }
+  
+  /* Stile per i messaggi di errore */
+  ion-label {
+    text-align: center;
+    h3 {
+      color: #ff0000; /* Testo rosso per richiamare l'errore */
+    }
+  }
+  
+  ion-button {
+    --background: #ff0000; /* Rosso acceso per il pulsante */
+    --border-radius: 20px;
+    color: #ffffff;
+  }
+  
+  /* Stile per gli h3 all'interno di ion-item */
+  ion-item h3 {
+    font-size: 1.2rem;
+    color: #ffffff; /* Testo bianco per i titoli */
+  }
+  
+  /* Stile per i p all'interno di ion-item */
+  ion-item p {
+    color: #bbbbbb; /* Colore grigio chiaro per il testo descrittivo */
+  }
+  
+  /* Aggiungi uno sfondo dinamico per la pagina */
+  :host {
+    background: linear-gradient(135deg, #000000, #1c1c1c); /* Grigio scuro con sfumature nere */
+  }
+  
+  /* Stile per dispositivi con schermo grande */
+  @media (min-width: 768px) {
+    ion-item {
+      max-width: 500px; /* Larghezza massima per gli item su schermi più grandi */
+      margin: 0 auto;
+    }
+  }
+  

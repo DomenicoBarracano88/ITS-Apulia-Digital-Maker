@@ -1,0 +1,134 @@
+/* Imposta un tema scuro con accenti di colore rosso, che richiama il look aggressivo e dinamico della F1 */
+ion-header {
+  --background: linear-gradient(90deg, #111, #222); /* Effetto metallizzato per l'intestazione */
+  ion-toolbar {
+    --background: transparent;
+  }
+}
+
+ion-title {
+  text-align: center;
+  font-size: 1.5rem;
+  color: #ffffff; /* Testo bianco per contrastare lo sfondo scuro */
+}
+
+img {
+  /* Rimuove il filtro di inversione */
+  filter: none;
+}
+
+/* Stile per il contenuto */
+ion-content {
+  --background: #121212; /* Sfondo scuro per l'app */
+}
+
+ion-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding: 10px;
+}
+
+
+
+/* Stile per le skeleton card quando i dati stanno caricando */
+ion-skeleton-text {
+  --background: #444;
+  --background-animated: linear-gradient(90deg, #333 0%, #555 50%, #333 100%);
+  margin: 5px 0;
+  border-radius: 5px;
+}
+
+/* Stile per i messaggi di errore */
+ion-label {
+  text-align: center;
+  h3 {
+    color: #ff0000; /* Testo rosso per richiamare l'errore */
+  }
+}
+
+ion-button {
+  --background: #ff0000; /* Rosso acceso per il pulsante */
+  --border-radius: 20px;
+  color: #ffffff;
+}
+
+/* Personalizzazione dello stato di caricamento */
+ion-skeleton-text {
+  margin: 5px 0;
+  border-radius: 5px;
+}
+
+/* Layout generale */
+h3, p {
+  color: #ffffff; /* Colore del testo bianco su sfondo scuro */
+}
+
+/* Aggiungi uno sfondo dinamico per la pagina */
+:host {
+  background: linear-gradient(135deg, #000000, #1c1c1c); /* Grigio scuro con sfumature nere */
+}
+
+
+.cards-container {
+  display: flex;
+  justify-content: center; /* Centra orizzontalmente */
+  align-items: center; /* Centra verticalmente */
+  flex-wrap: wrap; /* Permette alle card di andare a capo su più righe */
+  min-height: 100vh; /* Fa in modo che il contenitore occupi tutta l'altezza della pagina */
+  padding: 20px;
+}
+
+.driver-card {
+  --background: #222; /* Sfondo scuro per la card */
+  border-radius: 15px; /* Angoli arrotondati per la card */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Leggera ombra */
+  margin: 15px; /* Spazio tra una card e l'altra */
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centra il contenuto orizzontalmente */
+  justify-content: center; /* Centra il contenuto verticalmente */
+  text-align: center; /* Centra i testi */
+  
+  width: 200px;  /* Imposta la larghezza fissa */
+  height: 300px; /* Imposta l'altezza fissa */
+
+  img {
+    width: 100px; /* Larghezza dell'immagine */
+    height: 100px; /* Altezza dell'immagine */
+    object-fit: cover; /* Assicura che l'immagine mantenga le proporzioni */
+    border-radius: 50%; /* Rende l'immagine circolare */
+    margin-bottom: 10px; /* Spazio tra l'immagine e il titolo */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Ombra sull'immagine */
+  }
+
+  ion-card-header {
+    margin-top: 10px;
+
+    ion-card-title {
+      font-size: 1.2rem;
+      color: #ff0000; /* Rosso acceso per il nome del pilota */
+    }
+
+    ion-card-subtitle {
+      font-size: 1rem;
+      color: #bbbbbb; /* Colore grigio chiaro per il sottotitolo */
+    }
+  }
+}
+
+/* Stile per dispositivi con schermo grande */
+@media (min-width: 768px) {
+  ion-card {
+      max-width: 400px; /* Larghezza massima per le card su schermi più grandi */
+      width: 400px; /* Imposta una larghezza fissa maggiore per i desktop */
+  }
+}
+
+/* Stile per dispositivi con schermo molto grande */
+@media (min-width: 1200px) {
+  ion-card {
+      width: 250px; /* Aumenta ulteriormente la larghezza per schermi molto grandi */
+  }
+}
