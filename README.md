@@ -1,4 +1,4 @@
-📌 ITS-Apulia-Digital-Maker
+
 Questa repository raccoglie i progetti svolti durante il mio percorso formativo presso ITS Apulia Digital Maker. Contiene esercizi, applicazioni e approfondimenti su diversi ambiti dello sviluppo software, tra cui:
 
 🏗 Architettura a Microservizi in Java
